@@ -1,0 +1,14 @@
+{
+  "name": "react-flux-dash",
+  "version": "0.1.0",
+  "description": "Helping Students with React + Flux development",
+  "main": "index.js",
+  "scripts": {
+    "test": "tests.js"
+  },
+  "author": "Alejandro Sanchez",
+  "license": "GPL-3.0",
+  "bin": {
+    "fluxify": "bin/fluxify.js"
+  }
+}

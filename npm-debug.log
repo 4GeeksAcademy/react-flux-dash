@@ -1,0 +1,106 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v6.11.2/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v6.11.2/bin/npm',
+1 verbose cli   'link' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.2
+4 verbose linkPkg /home/ubuntu/workspace/react-flux-dash
+5 silly gentlyRm /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash is being purged
+6 verbose gentlyRm don't care about contents; nuking /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash
+7 verbose link build target /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash
+8 silly loadCurrentTree Starting
+9 silly install loadCurrentTree
+10 silly install readLocalPackageData
+11 silly install normalizeTree
+12 silly loadCurrentTree Finishing
+13 silly loadIdealTree Starting
+14 silly install loadIdealTree
+15 silly cloneCurrentTree Starting
+16 silly install cloneCurrentTreeToIdealTree
+17 silly cloneCurrentTree Finishing
+18 silly loadShrinkwrap Starting
+19 silly install loadShrinkwrap
+20 silly loadShrinkwrap Finishing
+21 silly loadAllDepsIntoIdealTree Starting
+22 silly install loadAllDepsIntoIdealTree
+23 silly loadAllDepsIntoIdealTree Finishing
+24 silly loadIdealTree Finishing
+25 silly currentTree react-flux-dash@0.1.0
+26 silly idealTree react-flux-dash@0.1.0
+27 silly generateActionsToTake Starting
+28 silly install generateActionsToTake
+29 silly generateActionsToTake Finishing
+30 silly diffTrees action count 0
+31 silly decomposeActions action count 0
+32 silly runTopLevelLifecycles Starting
+33 silly install runPreinstallTopLevelLifecycles
+34 silly preinstall react-flux-dash@0.1.0 /home/ubuntu/workspace/react-flux-dash/react-flux-dash-fd81f056
+35 info lifecycle react-flux-dash@0.1.0~preinstall: react-flux-dash@0.1.0
+36 silly lifecycle react-flux-dash@0.1.0~preinstall: no script for preinstall, continuing
+37 silly executeActions Starting
+38 silly install executeActions
+39 silly doSerial global-install 0
+40 silly doParallel fetch 0
+41 verbose correctMkdir /home/ubuntu/.npm/_locks correctMkdir not in flight; initializing
+42 verbose lock using /home/ubuntu/.npm/_locks/staging-28c65c4d6fe438c9.lock for /home/ubuntu/workspace/react-flux-dash/node_modules/.staging
+43 silly doParallel extract 0
+44 silly doParallel preinstall 0
+45 silly doReverseSerial remove 0
+46 silly doSerial move 0
+47 silly doSerial finalize 0
+48 silly doSerial build 0
+49 silly doSerial global-link 0
+50 silly doParallel update-linked 0
+51 silly doSerial install 0
+52 silly doSerial postinstall 0
+53 verbose unlock done using /home/ubuntu/.npm/_locks/staging-28c65c4d6fe438c9.lock for /home/ubuntu/workspace/react-flux-dash/node_modules/.staging
+54 silly executeActions Finishing
+55 silly rollbackFailedOptional Starting
+56 silly rollbackFailedOptional Finishing
+57 silly install runPostinstallTopLevelLifecycles
+58 silly build react-flux-dash@0.1.0
+59 info linkStuff react-flux-dash@0.1.0
+60 silly linkStuff react-flux-dash@0.1.0 has /home/ubuntu/workspace as its parent node_modules
+61 verbose linkBins react-flux-dash@0.1.0
+62 verbose linkMans react-flux-dash@0.1.0
+63 silly install react-flux-dash@0.1.0 /home/ubuntu/workspace/react-flux-dash/react-flux-dash-fd81f056
+64 info lifecycle react-flux-dash@0.1.0~install: react-flux-dash@0.1.0
+65 silly lifecycle react-flux-dash@0.1.0~install: no script for install, continuing
+66 silly postinstall react-flux-dash@0.1.0 /home/ubuntu/workspace/react-flux-dash/react-flux-dash-fd81f056
+67 info lifecycle react-flux-dash@0.1.0~postinstall: react-flux-dash@0.1.0
+68 silly lifecycle react-flux-dash@0.1.0~postinstall: no script for postinstall, continuing
+69 silly prepublish react-flux-dash@0.1.0 /home/ubuntu/workspace/react-flux-dash/react-flux-dash-fd81f056
+70 info lifecycle react-flux-dash@0.1.0~prepublish: react-flux-dash@0.1.0
+71 silly lifecycle react-flux-dash@0.1.0~prepublish: no script for prepublish, continuing
+72 silly runTopLevelLifecycles Finishing
+73 silly install printInstalled
+74 warn react-flux-dash@0.1.0 No repository field.
+75 verbose If you need help, you may report this error at:
+75 verbose     <https://github.com/npm/npm/issues>
+76 info build /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash
+77 info linkStuff react-flux-dash@0.1.0
+78 silly linkStuff react-flux-dash@0.1.0 has /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules as its parent node_modules
+79 silly linkStuff react-flux-dash@0.1.0 is part of a global install
+80 silly linkStuff react-flux-dash@0.1.0 is installed into a global node_modules
+81 silly linkStuff react-flux-dash@0.1.0 is installed into the top-level global node_modules
+82 verbose linkBins react-flux-dash@0.1.0
+83 verbose link bins [ { fluxify: 'bin/fluxify.js' },
+83 verbose link bins   '/home/ubuntu/.nvm/versions/node/v6.11.2/bin',
+83 verbose link bins   true ]
+84 verbose linkMans react-flux-dash@0.1.0
+85 verbose stack Error: ENOENT: no such file or directory, chmod '/home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash/bin/fluxify.js'
+85 verbose stack     at Error (native)
+86 verbose cwd /home/ubuntu/workspace/react-flux-dash
+87 error Linux 4.9.80-c9
+88 error argv "/home/ubuntu/.nvm/versions/node/v6.11.2/bin/node" "/home/ubuntu/.nvm/versions/node/v6.11.2/bin/npm" "link"
+89 error node v6.11.2
+90 error npm  v3.10.10
+91 error path /home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash/bin/fluxify.js
+92 error code ENOENT
+93 error errno -2
+94 error syscall chmod
+95 error enoent ENOENT: no such file or directory, chmod '/home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash/bin/fluxify.js'
+96 error enoent ENOENT: no such file or directory, chmod '/home/ubuntu/.nvm/versions/node/v6.11.2/lib/node_modules/react-flux-dash/bin/fluxify.js'
+96 error enoent This is most likely not a problem with npm itself
+96 error enoent and is related to npm not being able to find a file.
+97 verbose exit [ -2, true ]
