@@ -1,3 +1,4 @@
+import React from 'react';
 import EventEmmiter from 'events';
 import { Dispatcher } from 'flux';
 
@@ -15,7 +16,34 @@ export class FluxStore extends EventEmmiter{
         this.emit('change');
     }
     
-    handleActions(){
+    handleActions(actionType){
         throw "The store must have a handleActions method";
     }
+}
+
+export class FluxComponent extends React.Component{
+        
+        constructor(){
+            super();
+            this._stores = [];
+        }
+        
+        bindStore(storeClass){
+            if(typeof(this.handleStoreChanges) == 'undefined') throw "The component must have a handleStoreChanges method";
+            
+            if(typeof(storeClass) == 'undefined') throw "Undefined storeClass when calling setStore";
+            
+            if(storeClass instanceof React.Component) storeClass = [storeClass];
+            
+            storeClass.forEach((item) => {
+                item.on('change', this.handleStoreChanges.bind(this))
+            });
+            this._stores = this._stores.concat(storeClass);
+        }
+        
+        componentWillUnmount(){
+            this._stores.forEach((item) => {
+                item.on('change', this.handleStoreChanges.bind(this))
+            });
+        }
 }
