@@ -9,7 +9,7 @@ Learning flux is hard, using it is cumbersome. Hopefully it will become easier w
 ## Dispatching actions
 
 You actions object needs to inhering from Flex.Action, then you will be able to dispatch to any store and setter
-```
+```js
 class SessionActions extends Flux.Action{
     
     autenticateUser(){
@@ -20,7 +20,7 @@ class SessionActions extends Flux.Action{
 
 On your store you will be going the following
 
-```
+```js
 class StoreActions extends Flux.Store{
     constructor(){
         super();
@@ -43,7 +43,7 @@ There are 3 ways of going it
 
 1) New lifecycle component function **handleStoreChanges** for store changes
 
-```
+```js
     import MyStore from '/path/to/store';
     
     class MyComponent extends Flux.View{
@@ -60,7 +60,7 @@ There are 3 ways of going it
 
 2) Or set event name and handler
 
-```
+```js
     import MyStore from '/path/to/store';
     
     class MyComponent extends Flux.View{
