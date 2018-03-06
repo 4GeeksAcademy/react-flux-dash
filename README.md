@@ -22,8 +22,9 @@ import Flux from 'react-flux-dash';
 var Flux = require('react-flux-dash').default();
 ```
 
+## Let's build a Flux Workflow for autentication
 
-## Dispatching actions
+### 1) Dispatching actions
 
 You actions object needs to inhering from Flex.Action, then you will be able to dispatch to any store and setter
 ```js
@@ -31,10 +32,12 @@ import Flux from 'react-flux-dash';
 class SessionActions extends Flux.Action{
     
     autenticateUser(){
-        this.dispatch('SessionStore.setAutentication', data);
+        this.dispatch('SessionStore.setAutentication', {autenticated: true});
         // you will have to create a _setAutentication inside StoreActions
     }
 ```
+
+### 2) The Store
 
 On your store you will be going the following
 
@@ -48,11 +51,12 @@ class SessionStore extends Flux.Store{
         }
     }
     
-    _setAutentication(){
+    //you are forced to use _ to avoid using the setters anywhere else
+    _setAutentication(data){
         //set the the new store state and emit
-        this.setStoreState({ autenticated: true }).emit();
+        this.setStoreState({ autenticated: data.autenticated }).emit();
         //you can specify an event name if you want
-        this.setStoreState({ autenticated: true }).emit('EVENT_NAME');
+        this.setStoreState({ autenticated: data.autenticated }).emit('EVENT_NAME');
     }
     
     getAutentication(){
@@ -60,7 +64,7 @@ class SessionStore extends Flux.Store{
     }
 }
 ```
-## Handling store changes
+### 3) Handling store changes
 
 There are 2 main way to listen to store changes:
 
@@ -72,10 +76,13 @@ There are 2 main way to listen to store changes:
     
     class MyComponent extends Flux.View{
         constructor(){
-            // initialize your state
+            super();
+            // bind your store on the view
             this.bindStore(SessionStore);
         }
-        //this function gets automatically called when SessionStore state changes
+        
+        // if you dont define this function you get an error
+        // this function gets automatically called when SessionStore state changes
         handleStoreChanges(){
             // retreive any store data
             var isAutenticated = SessionStore.getAutentication();
@@ -104,3 +111,8 @@ There are 2 main way to listen to store changes:
         }
     }
 ```
+
+## Contributors
+
+- Alejandro Sanchez [github.com/alesanchezr](https://github.com/alesanchezr) [alesanchezr.com](http://alesanchezr.com)
+- Angel Lacret [github.com/alacret](https://github.com/alacret)
