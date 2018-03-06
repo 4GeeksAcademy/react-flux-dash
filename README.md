@@ -98,7 +98,7 @@ There are 2 main way to listen to store changes:
     class MyComponent extends Flux.View{
         constructor(){
             // start listening to changes on SessionStore for especific event
-            this.bindStore(SessionStore,'EVENT_NAME' function(){
+            this.bindStore(SessionStore,'EVENT_NAME', function(){
                 // retreive any store data
                 var isAutenticated = SessionStore.getAutentication();
             });
