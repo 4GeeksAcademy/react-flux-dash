@@ -1,8 +1,8 @@
 {
   "name": "react-flux-dash",
-  "version": "0.1.02",
+  "version": "1.0.3",
   "description": "Helping Students with React + Flux development",
-  "main": "react-flux-dash.js",
+  "main": "dist/react-flux-dash.js",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "start": "webpack --config webpack.config.js --mode production"

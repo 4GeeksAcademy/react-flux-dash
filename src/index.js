@@ -47,6 +47,7 @@ class View extends React.Component{
         constructor(props){
             super(props);
             this._stores = [];
+            this._callbacks = {};
         }
         
         bindStore(storeClass, second=null, callback=null){
@@ -70,14 +71,25 @@ class View extends React.Component{
             else if(typeof storeClass != 'array') throw typeof(storeClass)+" needs to be a Flux.Store class or an array of FluxStore classes";
             
             storeClass.forEach((item) => {
-                item.on(eventName, callback.bind(this))
+                if(typeof(this._callbacks[item.constructor.name]) == 'undefined')
+                    this._callbacks[item.constructor.name] = [];
+                this._callbacks[item.constructor.name].push({
+                    callbackEvent: eventName,
+                    callbackFunction: callback
+                });                    
+                item.on(eventName, callback.bind(this));
             });
             this._stores = this._stores.concat(storeClass);
         }
         
         componentWillUnmount(){
             this._stores.forEach((item) => {
-                item.on('change', this.handleStoreChanges.bind(this))
+                if(typeof(this._callbacks[item.constructor.name]) == 'array')
+                {
+                    this._callbacks[item.constructor.name].forEach((callback) => {
+                        item.removeListener(callback.callbackEvent, callback.callbackFunction);
+                    });
+                }
             });
         }
 }
