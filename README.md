@@ -1,4 +1,4 @@
-# React FluxDash
+# React Flux Dash
 
 Learning flux is hard, using it is cumbersome. Hopefully it will become easier with this library!
 
