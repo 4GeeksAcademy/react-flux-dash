@@ -11,7 +11,7 @@ These are the  biggest library features:
 
 1. Run on your terminal the following command:
 ```sh
-$ npm install react-flux-dash
+$ npm install react-flux-dash --save
 ```
 2. To import the library anywhere you would like to use it:
 ```js
