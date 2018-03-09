@@ -1,6 +1,6 @@
 {
   "name": "react-flux-dash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helping Students with React + Flux development",
   "main": "index.js",
   "scripts": {
