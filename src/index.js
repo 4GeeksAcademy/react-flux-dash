@@ -85,7 +85,7 @@ class View extends React.Component {
                     callback = this.handleStoreChanges
                 }
             }
-            else if(typeof eventName == 'function') callback = eventName;
+            else if(typeof second == 'function') callback = second;
 
             if(callback==null && typeof(this.handleStoreChanges) == 'undefined') throw this.constructor.name+" have a handleStoreChanges method because is binded to "+storeObject;
             else callback = this.handleStoreChanges;
