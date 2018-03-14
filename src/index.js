@@ -26,7 +26,7 @@ class Store extends EventEmmiter {
         // Always tell that the store change
         this.emit('change');
         setTimeout(() => {
-            if (isEmited == false) throw("Warning! You need to emit the store after updating the " + this.constructor.name);
+            if (isEmited === false) throw new Error("Warning! You need to emit the store after updating the " + this.constructor.name);
         }, 1000);
         return {
             emit: (eventName = 'change') => {
@@ -45,10 +45,10 @@ class Store extends EventEmmiter {
         var storeName = actionSlugParts[0];
         var storeMethod = actionSlugParts[1];
 
-        if (storeName == 'ALL' || storeName == this.constructor.name || ('_' + storeName) == this.constructor.name) {
-            if (typeof(this[storeMethod]) == 'function') throw storeName + '.' + storeMethod + ' must be prepended by _ (underscore) because is a "private" method';
-            else if (typeof(this['_' + storeMethod]) == 'undefined') throw storeName + ' must have a method _' + storeMethod;
-            else if (typeof(this['_' + storeMethod]) != 'function') throw storeName + '._' + storeMethod + ' is not a function';
+        if (storeName === 'ALL' || storeName === this.constructor.name || ('_' + storeName) === this.constructor.name) {
+            if (typeof(this[storeMethod]) === 'function') throw new Error(storeName + '.' + storeMethod + ' must be prepended by _ (underscore) because is a "private" method');
+            else if (typeof(this['_' + storeMethod]) === 'undefined') throw  new Error(storeName + ' must have a method _' + storeMethod);
+            else if (typeof(this['_' + storeMethod]) !== 'function') throw  new Error(storeName + '._' + storeMethod + ' is not a function');
 
             this['_' + storeMethod](action.actionData);
         }
@@ -69,37 +69,34 @@ class View extends React.Component {
          * @param second The event Name that we want to bind
          * @param callback an Optinal CallBack for the event
          */
-        bindStore(storeObject, second = null, callback = null) {
+        bindStore(storeClass, second = null, callback = null) {
 
-            if (typeof(storeObject) == 'undefined') throw "Undefined storeObject when calling setStore";
+            if (typeof(storeClass) === 'undefined') throw new Error("Undefined StoreClass when calling bindStore on "+this.constructor.name);
 
-            if(storeObject.constructor.name == 'ALL') throw 'Constructor cannot be called ALL, it is a reserved word';
+            if(storeClass.constructor.name === 'ALL') throw new Error("StoreClass cannot be called 'ALL', it is a reserved word");
 
             var eventName = 'change';
-            if(typeof second == 'string'){
+            if(typeof second === 'string'){
                 eventName = second;
-                if (callback == null) {
-                    if (typeof(this.handleStoreChanges) == 'undefined') {
-                        throw new Error(`Store must implement a 'handleStoreChanges' method or provide a function for handling the ${eventName}`)
+                if (callback === null) {
+                    if (typeof(this.handleStoreChanges) === 'undefined') {
+                        throw new Error(`${this.constructor.name} must implement a 'handleStoreChanges' method or provide a function for handling the ${eventName}`)
                     }
-                    callback = this.handleStoreChanges
+                    callback = this.handleStoreChanges;
                 }
             }
-            else if(typeof second == 'function') callback = second;
+            else if(typeof second === 'function') callback = second;
 
-            if(callback==null && typeof(this.handleStoreChanges) == 'undefined') throw this.constructor.name+" have a handleStoreChanges method because is binded to "+storeObject;
-            else callback = this.handleStoreChanges;
+            if(callback === null && typeof(this.handleStoreChanges) === 'undefined') throw new Error(this.constructor.name+" needs to have a handleStoreChanges method or callback because is binded to a Store");
 
-            if(typeof(storeObject) == 'undefined') throw "Undefined storeObject when calling setStore";
+            if(storeClass instanceof Store) storeClass = [storeClass];
+            else if(!Array.isArray(storeClass)) throw new Error("You are binding "+this.constructor.name+" to "+storeClass.constructor.name+" and it needs to be binded to Flux.Store classes");
 
-            if(storeObject instanceof Store) storeObject = [storeObject];
-            else if(typeof storeObject != 'array') throw typeof(storeObject)+" needs to be a Flux.Store class or an array of FluxStore classes";
-
-            storeObject.forEach((item) => {
+            storeClass.forEach((item) => {
                 if (!(item instanceof Store))
-                    throw new Error(`${item} must instance of Store`);
+                    throw new Error(`${item} must instance of Store in ${this.constructor.name}`);
 
-                if(typeof(this._callbacks[item.constructor.name]) == 'undefined')
+                if(typeof(this._callbacks[item.constructor.name]) === 'undefined')
                     this._callbacks[item.constructor.name] = [];
                 this._callbacks[item.constructor.name].push({
                     callbackEvent: eventName,
@@ -107,12 +104,12 @@ class View extends React.Component {
                 });
                 item.on(eventName, callback.bind(this));
             });
-            this._stores = this._stores.concat(storeObject);
+            this._stores = this._stores.concat(storeClass);
         }
 
         componentWillUnmount(){
             this._stores.forEach((item) => {
-                if(typeof(this._callbacks[item.constructor.name]) == 'array')
+                if(Array.isArray(this._callbacks[item.constructor.name]))
                 {
                     this._callbacks[item.constructor.name].forEach((callback) => {
                         item.removeListener(callback.callbackEvent, callback.callbackFunction);
@@ -127,7 +124,7 @@ class Action {
     dispatch(actionSlug, actionData = null) {
         var actionSlugParts = actionSlug.split('.');
 
-        if (actionSlugParts.length != 2) throw 'Action type ' + actionSlug + ' is invalid, you need to specify Store.method';
+        if (actionSlugParts.length !== 2) throw new Error('Action type ' + actionSlug + ' is invalid, you need to specify Store.method');
         //this will be the store name
         //var storeName = actionSlugParts[0];
 
@@ -139,5 +136,4 @@ class Action {
 
 }
 
-var Flux = {Store: Store, Action: Action, View: View, Component: View}
-export default Flux;
+export default {Store: Store, Action: Action, View: View, Component: View};
