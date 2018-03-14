@@ -88,7 +88,8 @@ class View extends React.Component {
             else if(typeof second === 'function') callback = second;
 
             if(callback === null && typeof(this.handleStoreChanges) === 'undefined') throw new Error(this.constructor.name+" needs to have a handleStoreChanges method or callback because is binded to a Store");
-
+            else if(callback === null && typeof(this.handleStoreChanges) === 'function') callback = this.handleStoreChanges;
+            
             if(storeClass instanceof Store) storeClass = [storeClass];
             else if(!Array.isArray(storeClass)) throw new Error("You are binding "+this.constructor.name+" to "+storeClass.constructor.name+" and it needs to be binded to Flux.Store classes");
 
