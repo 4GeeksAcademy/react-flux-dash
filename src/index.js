@@ -76,19 +76,12 @@ class View extends React.Component {
             if(storeClass.constructor.name === 'ALL') throw new Error("StoreClass cannot be called 'ALL', it is a reserved word");
 
             var eventName = 'change';
-            if(typeof second === 'string'){
-                eventName = second;
-                if (callback === null) {
-                    if (typeof(this.handleStoreChanges) === 'undefined') {
-                        throw new Error(`${this.constructor.name} must implement a 'handleStoreChanges' method or provide a function for handling the ${eventName}`)
-                    }
-                    callback = this.handleStoreChanges;
-                }
-            }
+            if(typeof second === 'string') eventName = second;
             else if(typeof second === 'function') callback = second;
-
+            
             if(callback === null && typeof(this.handleStoreChanges) === 'undefined') throw new Error(this.constructor.name+" needs to have a handleStoreChanges method or callback because is binded to a Store");
-            else if(callback === null && typeof(this.handleStoreChanges) === 'function') callback = this.handleStoreChanges;
+            
+            if(callback === null) callback = this.handleStoreChanges;
             
             if(storeClass instanceof Store) storeClass = [storeClass];
             else if(!Array.isArray(storeClass)) throw new Error("You are binding "+this.constructor.name+" to "+storeClass.constructor.name+" and it needs to be binded to Flux.Store classes");
