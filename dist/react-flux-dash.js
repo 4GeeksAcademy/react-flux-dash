@@ -430,6 +430,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var FluxDispatcher = new _flux.Dispatcher();
 
+var log = function log(msg) {
+    if (typeof window.DEBUG === 'undefined') return;
+    if (window.DEBUG === true) console.log(msg);
+    return;
+};
+
 /**
  * Store extension that register with the FluxDispatcher singleton
  * and handles all the events
@@ -508,8 +514,7 @@ var View = function (_React$Component) {
 
         var _this3 = _possibleConstructorReturn(this, (View.__proto__ || Object.getPrototypeOf(View)).call(this, props));
 
-        _this3._stores = [];
-        _this3._callbacks = {};
+        _this3._callbacks = [];
         return _this3;
     }
 
@@ -529,13 +534,16 @@ var View = function (_React$Component) {
             var second = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
             var callback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
+            log('Flux.View:bindStore: ' + storeClass + ', ' + second + ', ' + callback);
 
             if (typeof storeClass === 'undefined') throw new Error("Undefined StoreClass when calling bindStore on " + this.constructor.name);
 
             if (storeClass.constructor.name === 'ALL') throw new Error("StoreClass cannot be called 'ALL', it is a reserved word");
 
             var eventName = 'change';
-            if (typeof second === 'string') eventName = second;else if (typeof second === 'function') callback = second;
+            if (typeof second === 'string') eventName = second;
+
+            if (typeof second === 'function') callback = second;
 
             if (callback === null && typeof this.handleStoreChanges === 'undefined') throw new Error(this.constructor.name + " needs to have a handleStoreChanges method or callback because is binded to a Store");
 
@@ -546,26 +554,23 @@ var View = function (_React$Component) {
             storeClass.forEach(function (item) {
                 if (!(item instanceof Store)) throw new Error(item + ' must instance of Store in ' + _this4.constructor.name);
 
-                if (typeof _this4._callbacks[item.constructor.name] === 'undefined') _this4._callbacks[item.constructor.name] = [];
-                _this4._callbacks[item.constructor.name].push({
+                var realCallback = callback.bind(_this4);
+
+                _this4._callbacks.push({
+                    store: item,
                     callbackEvent: eventName,
-                    callbackFunction: callback
+                    callbackFunction: realCallback
                 });
-                item.on(eventName, callback.bind(_this4));
+
+                item.on(eventName, realCallback);
             });
-            this._stores = this._stores.concat(storeClass);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            var _this5 = this;
-
-            this._stores.forEach(function (item) {
-                if (Array.isArray(_this5._callbacks[item.constructor.name])) {
-                    _this5._callbacks[item.constructor.name].forEach(function (callback) {
-                        item.removeListener(callback.callbackEvent, callback.callbackFunction);
-                    });
-                }
+            log("Flux.View:componentWillUnmount");
+            this._callbacks.forEach(function (obj) {
+                obj.store.removeListener(obj.callbackEvent, obj.callbackFunction);
             });
         }
     }]);
