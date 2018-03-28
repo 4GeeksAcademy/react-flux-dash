@@ -35,6 +35,9 @@ class SessionActions extends Flux.Action{
         this.dispatch('SessionStore.setAutentication', {autenticated: true});
         // you will have to create a _setAutentication inside StoreActions
     }
+    ...
+}
+export default new SessionActions();
 ```
 
 ### 2) The Store
@@ -63,6 +66,7 @@ class SessionStore extends Flux.Store{
         return this.state.autenticated;
     }
 }
+export default new SessionStore();
 ```
 ### 3) Handling store changes
 
@@ -88,6 +92,7 @@ There are 2 main way to listen to store changes:
             var isAutenticated = SessionStore.getAutentication();
         }
     }
+
 ```
 
 2) Or set event name and handler
