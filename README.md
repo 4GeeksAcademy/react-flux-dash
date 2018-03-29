@@ -16,28 +16,37 @@ $ npm install @4geeksacademy/react-flux-dash --save
 2. To import the library anywhere you would like to use it:
 ```js
 import Flux from 'react-flux-dash';
-
-// or you can also do
-
-var Flux = require('react-flux-dash').default();
 ```
 
 ## Let's build a Flux Workflow for autentication
 
-### 1) Dispatching actions
+### 1) First, call any action from any of your views
 
-You actions object needs to inhering from Flex.Action, then you will be able to dispatch to any store and setter
+```js
+let username = 'anyuser';
+let password = '1234';
+SessionActions.autenticateUser(username, password);
+```
+
+### 2) Dispatch from the action
+
+From any of you actions, you are be able to dispatch to any store you want, specifying what setter method will take care of saving the data into the store.
+
 ```js
 import Flux from 'react-flux-dash';
 class SessionActions extends Flux.Action{
     
     autenticateUser(){
-        this.dispatch('SessionStore.setAutentication', {autenticated: true});
+        let dataToSave = {
+            autenticated: true
+        }
+        this.dispatch('SessionStore.setAutentication', dataToSave);
         // you will have to create a _setAutentication inside StoreActions
     }
 ```
+Note: Your action class needs to inhering from Flex.Action.
 
-### 2) The Store
+### 3) Save the data into The Store State
 
 On your store you will be going the following
 
@@ -46,6 +55,7 @@ import Flux from 'react-flux-dash';
 class SessionStore extends Flux.Store{
     constructor(){
         super();
+        //state initialization on constructor
         this.state = {
             autenticated: false 
         }
@@ -64,7 +74,7 @@ class SessionStore extends Flux.Store{
     }
 }
 ```
-### 3) Handling store changes
+### 4) Handling store changes
 
 There are 2 main way to listen to store changes:
 

@@ -52,8 +52,10 @@ class Store extends EventEmmiter {
         var actionSlugParts = action.actionSlug.split('.');
         var storeName = actionSlugParts[0];
         var storeMethod = actionSlugParts[1];
+        
+        storeName = storeName.toLowerCase();//make the store name lowercase to avoid case sensitive
 
-        if (storeName === 'ALL' || storeName === this.constructor.name || ('_' + storeName) === this.constructor.name) {
+        if (storeName === 'all' || storeName === this.constructor.name.toLowerCase() || ('_' + storeName) === this.constructor.name.toLocaleLowerCase()) {
             if (typeof(this[storeMethod]) === 'function') throw new Error(storeName + '.' + storeMethod + ' must be prepended by _ (underscore) because is a "private" method');
             else if (typeof(this['_' + storeMethod]) === 'undefined') throw  new Error(storeName + ' must have a method _' + storeMethod);
             else if (typeof(this['_' + storeMethod]) !== 'function') throw  new Error(storeName + '._' + storeMethod + ' is not a function');
