@@ -15,7 +15,7 @@ $ npm install @4geeksacademy/react-flux-dash --save
 ```
 2. To import the library anywhere you would like to use it:
 ```js
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 ```
 
 ## Let's build a Flux Workflow for autentication
@@ -33,7 +33,7 @@ SessionActions.autenticateUser(username, password);
 From any of you actions, you are be able to dispatch to any store you want, specifying what setter method will take care of saving the data into the store.
 
 ```js
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 class SessionActions extends Flux.Action{
     
     autenticateUser(){
@@ -54,7 +54,7 @@ Note: Your action class needs to inhering from Flex.Action.
 On your store you will be going the following
 
 ```js
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 class SessionStore extends Flux.Store{
     constructor(){
         super();
@@ -85,7 +85,7 @@ There are 2 main way to listen to store changes:
 1) New lifecycle component function **handleStoreChanges** for store changes
 
 ```js
-    import Flux from 'react-flux-dash';
+    import Flux from '@4geeksacademy/react-flux-dash';
     import SessionStore from '/path/to/store';
     
     class MyComponent extends Flux.View{
