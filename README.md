@@ -1,4 +1,7 @@
 # React Flux Dash
+[![Version](https://img.shields.io/npm/v/@4geeksacademy/react-flux-dash.svg)](https://npmjs.org/package/react-flux-dash)
+[![Downloads/week](https://img.shields.io/npm/dw/@4geeksacademy/react-flux-dash.svg)](https://npmjs.org/package/react-flux-dash)
+[![License](https://img.shields.io/npm/l/@4geeksacademy/react-flux-dash.svg)](https://github.com/Techniv/Licenses-for-GitHub/tree/master/GNU-GPL)
 
 Learning flux is hard, using it is cumbersome. Hopefully it will become easier with this library!
 
