@@ -134,3 +134,4 @@ There are 2 main ways to listen to store changes:
 
 - Alejandro Sanchez [github.com/alesanchezr](https://github.com/alesanchezr) [alesanchezr.com](http://alesanchezr.com)
 - Angel Lacret [github.com/alacret](https://github.com/alacret)
+- Allan Thinks [github.com/alanthinks](https://github.com/alanthinks)
