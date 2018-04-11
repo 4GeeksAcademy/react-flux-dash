@@ -34,7 +34,8 @@ class Store extends EventEmmiter {
         // Always tell that the store change
         this.emit('change');
         setTimeout(() => {
-            if (isEmited === false) throw new Error("Warning! You need to emit the store after updating the " + this.constructor.name);
+            if (isEmited === false)
+                throw new Error("Warning! You need to emit the store after updating the " + this.constructor.name);
         }, 1000);
         return {
             emit: (eventName = 'change') => {
@@ -56,7 +57,8 @@ class Store extends EventEmmiter {
         storeName = storeName.toLowerCase();//make the store name lowercase to avoid case sensitive
 
         if (storeName === 'all' || storeName === this.constructor.name.toLowerCase() || ('_' + storeName) === this.constructor.name.toLocaleLowerCase()) {
-            if (typeof(this[storeMethod]) === 'function') throw new Error(storeName + '.' + storeMethod + ' must be prepended by _ (underscore) because is a "private" method');
+            if (typeof(this[storeMethod]) === 'function')
+                throw new Error(storeName + '.' + storeMethod + ' must be prepended by _ (underscore) because is a "private" method');
             else if (typeof(this['_' + storeMethod]) === 'undefined') throw  new Error(storeName + ' must have a method _' + storeMethod);
             else if (typeof(this['_' + storeMethod]) !== 'function') throw  new Error(storeName + '._' + storeMethod + ' is not a function');
 
@@ -133,7 +135,8 @@ class Action {
     dispatch(actionSlug, actionData = null) {
         var actionSlugParts = actionSlug.split('.');
 
-        if (actionSlugParts.length !== 2) throw new Error('Action type ' + actionSlug + ' is invalid, you need to specify Store.method');
+        if (actionSlugParts.length !== 2)
+            throw new Error('Action type ' + actionSlug + ' is invalid, you need to specify Store.method');
         //this will be the store name
         //var storeName = actionSlugParts[0];
 
