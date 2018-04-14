@@ -1,4 +1,10 @@
-
+/**
+ * Validates if the input is a Valid Text
+ * Non null, non undefined, non empty
+ * @param text The Text to be validated
+ * @returns {*} the Text if it is Valid
+ * @thro
+ */
 function validateText(text) {
     if (typeof (text) === "undefined")
         throw new Error("text can't be undefined");
