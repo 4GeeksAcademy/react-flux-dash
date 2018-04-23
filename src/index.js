@@ -2,6 +2,10 @@ import React from 'react';
 import EventEmmiter from 'events';
 import {Dispatcher} from 'flux';
 
+import DashStore from "./v2/Store";
+import DashEvent from "./v2/Event";
+import {dispatchEvent} from './v2/index'
+
 const FluxDispatcher = new Dispatcher();
 
 const log = function (msg, obj) {
@@ -153,4 +157,4 @@ class Action {
 
 }
 
-export default {Store: Store, Action: Action, View: View, Component: View};
+export default {Store: Store, Action: Action, View: View, Component: View, DashStore, DashEvent, dispatchEvent};
