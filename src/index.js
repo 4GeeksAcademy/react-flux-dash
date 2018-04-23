@@ -4,11 +4,14 @@ import {Dispatcher} from 'flux';
 
 const FluxDispatcher = new Dispatcher();
 
-const log = function (msg) {
+const log = function (msg, obj) {
     if (typeof(window.DEBUG) === 'undefined')
         return;
     if (window.DEBUG === true)
-        console.log(msg);
+        if (obj)
+            console.log("REACT-FLUX-DASH:" + msg, obj);
+        else
+            console.log("REACT-FLUX-DASH:" + msg);
     return
 }
 
@@ -50,6 +53,7 @@ class Store extends EventEmmiter {
      * @param action
      */
     handleActions(action) {
+        log("Flux.Store:" + action);
         var actionSlugParts = action.actionSlug.split('.');
         var storeName = actionSlugParts[0];
         var storeMethod = actionSlugParts[1];
@@ -133,6 +137,7 @@ class View extends React.Component {
 class Action {
 
     dispatch(actionSlug, actionData = null) {
+        log("Flux.Action:" + {actionSlug, actionData});
         var actionSlugParts = actionSlug.split('.');
 
         if (actionSlugParts.length !== 2)
