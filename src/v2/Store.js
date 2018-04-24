@@ -62,7 +62,7 @@ class Store {
             const eventName = event.name;
             state = Object.assign(state, {[eventName]: eventState})
         });
-        return state;
+        return Object.freeze(state);
     }
 }
 
