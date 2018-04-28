@@ -19,10 +19,14 @@ class Store {
         //Check for duplicated names on the Store
         this.events.forEach(event => {
             if (event.name === validateEventName) {
-                throw new Error(`An event named: ${validateEventName} already exists on the Store`);
+                throw new Error(`STORE: An event named: ${validateEventName} already exists on the Store`);
             }
         });
-        const e = new Event(eventName, transformers);
+        let e;
+        if (transformers.length > 0)
+            e = new Event(eventName, transformers);
+        else
+            e = new Event(eventName);
         this.events.push(e);
         allEvents.push(e);
     }

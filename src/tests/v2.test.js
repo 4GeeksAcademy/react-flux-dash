@@ -3,6 +3,7 @@ import Event from "../v2/Event";
 import {dispatchEvent} from '../v2/index';
 
 const EVENT_NAME = "SOMETHING_HAPPEND";
+const OTHER_EVENT_NAME = "SOMETHING_ELSE_HAPPEND";
 let testState = undefined;
 
 //
@@ -12,6 +13,7 @@ class TestStore extends Store {
         this.addEvent(EVENT_NAME, (state) => {
             return Object.assign(state, {"key": "value"})
         });
+        this.addEvent(OTHER_EVENT_NAME);
     }
 }
 
@@ -228,31 +230,31 @@ test('Valid Subscriber', () => {
     e.notify({"foo": "bar"})
 });
 
-test('InValid event on the Store', () => {
+test('InValid event on the Store: Duplicated event Name', () => {
     expect(() => {
         testStore.addEvent(EVENT_NAME);
     }).toThrow();
 });
 
-test('InValid subscriber on the Store', () => {
+test('InValid subscriber on the Store: Subscriber must be a function', () => {
     expect(() => {
         testStore.subscribe(EVENT_NAME, 113);
     }).toThrow();
 });
 
-test('InValid subscriber on the Store', () => {
+test('InValid subscriber on the Store: Subscriber must be a function', () => {
     expect(() => {
         testStore.subscribe(EVENT_NAME, {});
     }).toThrow();
 });
 
-test('InValid subscriber on the Store', () => {
+test('InValid subscriber on the Store: Unknown event', () => {
     expect(() => {
         testStore.subscribe("SOME OTHER EVENT NAME THAT DOES NOT EXISTS");
     }).toThrow();
 });
 
-test('InValid subscriber on the Store', () => {
+test('InValid subscriber on the Store: Unknown event', () => {
     expect(() => {
         testStore.subscribe("SOME OTHER EVENT NAME THAT DOES NOT EXISTS", () => {});
     }).toThrow();
