@@ -1,6 +1,6 @@
 {
   "name": "@4geeksacademy/react-flux-dash",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Helping Students with React + Flux development",
   "main": "dist/react-flux-dash.js",
   "scripts": {

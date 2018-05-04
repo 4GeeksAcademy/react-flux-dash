@@ -2079,7 +2079,7 @@ var Event = function () {
 
         this.name = (0, _Util.validateText)(name);
         this.transformers = new Array();
-        this.value = undefined;
+        this.value = null;
         this.subject = new _Subject.Subject();
 
         if (typeof transformers === "undefined") return;
@@ -2093,9 +2093,9 @@ var Event = function () {
 
             var testResult = transformer({});
 
-            if (typeof testResult === "undefined") throw new Error("All the transformers must return a mutated state object and not 'undefined'");
+            if (typeof testResult === "undefined") throw new Error("All the transformers must return a mutated state object and not 'undefined': " + transformer);
 
-            if (testResult === null) throw new Error("All the transformers must return a mutated state object and not 'null'");
+            if (testResult === null) throw new Error("All the transformers must return a mutated state object and not 'null': " + transformer);
         });
 
         this.transformers = transformers;
@@ -2246,14 +2246,29 @@ var Store = function () {
 
     }, {
         key: 'getState',
-        value: function getState() {
+        value: function getState(eventName) {
+            if (!(eventName === undefined || eventName === null)) return this.__getEventState(eventName);
+
             var state = {};
             this.events.forEach(function (event) {
                 var eventState = event.value;
                 var eventName = event.name;
                 state = Object.assign(state, _defineProperty({}, eventName, eventState));
             });
-            return Object.freeze(state);
+            return state;
+        }
+
+        /**
+         * Get the state of a particular event
+         * This is the last know value of the event
+         */
+
+    }, {
+        key: '__getEventState',
+        value: function __getEventState(eventName) {
+            for (var i = 0; i < this.events.length; i++) {
+                if (this.events[i].name === eventName) return this.events[i].value;
+            }throw new Error('Non existent eventName: ' + eventName + ' on Store');
         }
     }]);
 
