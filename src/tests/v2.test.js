@@ -11,6 +11,7 @@ class TestStore extends Store {
     constructor() {
         super();
         this.addEvent(EVENT_NAME, (state) => {
+            // Transform the state
             return Object.assign(state, {"key": "value"})
         });
         this.addEvent(OTHER_EVENT_NAME);
@@ -41,6 +42,21 @@ const testAction = () => {
 //
 testAction();
 const storeValue = testStore.getState();
+const eventValue = testStore.getState(EVENT_NAME);
+
+
+test('testState should throw error for eventName non existen', () => {
+    expect(() => {
+        testStore.getState("SOME other thing that does not exists");
+    }).toThrow();
+});
+
+test('testState should containt eventData', () => {
+    console.log(eventValue);
+    expect(eventValue).toEqual(expect.objectContaining({
+        foo: expect.any(String)
+    }));
+});
 
 test('testState should containt eventData', () => {
     console.log(testState);

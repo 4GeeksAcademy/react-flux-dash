@@ -1,3 +1,5 @@
+
+
 # React Flux Dash
 [![Version](https://img.shields.io/npm/v/@4geeksacademy/react-flux-dash.svg)](https://npmjs.org/package/react-flux-dash)
 [![Downloads/week](https://img.shields.io/npm/dw/@4geeksacademy/react-flux-dash.svg)](https://npmjs.org/package/react-flux-dash)
@@ -5,10 +7,18 @@
 
 Learning flux is hard, using it is cumbersome. Hopefully it will become easier with this library!
 
-These are the  biggest library features:
-1) No more Dispatcher: the logic is handled in the background
-2) Avoid 50% of errors: The library is very smart detecting potential omissions or errors, it even detects if you  change a store without emitting!
-3) Full MVC approach.
+Also, learning redux is harder, so this is state library that make your life easier
+
+Dash are a series of coding guidelines and principles to code in a easy, conventional, clean and expressive way.
+
+The principles and guidelines supporting this Library are:
+
+1) Define a Store should be an easy step, keeping the power of a "Single source of thruth"
+2) Data and event propagation should be done in a declarative way
+3) Views should be developer in a reactive way.
+4) Multiple Stores are allowed for better organization
+5) We keep flux as it should be unidirectaional, so there is no coupling between the Action and the Views, neither between the Actions and the Store, neither between the Store and the View
+6) The Store state is implicit: The last value of all the events on the Store.
 
 ## Installation
 
@@ -23,111 +33,122 @@ import Flux from '@4geeksacademy/react-flux-dash';
 
 ## Let's build a Flux Workflow for authentication
 
-### 1) First, call any action from any of your views
-
-```js
-let username = 'anyuser';
-let password = '1234';
-SessionActions.authenticateUser(username, password);
-```
-
-### 2) Dispatch from the action
-
-From any of your actions, you are able to dispatch to any store you want, specifying what setter method will take care of saving the data into the store.
+### 1) First, declare your Store
 
 ```js
 import Flux from '@4geeksacademy/react-flux-dash';
-class SessionActions extends Flux.Action{
-    
-    authenticateUser(){
-        let dataToSave = {
-            authenticated: true
-        }
-        this.dispatch('SessionStore.setAuthentication', dataToSave);
-        // you will have to create a _setAuthentication inside StoreActions
-    }
-    ...
-}
-export default new SessionActions();
-```
-Note: Your action class needs to extend (inherit) from Flex.Action.
 
-### 3) Save the data into The Store State
-
-On your store you will be doing the following
-
-```js
-import Flux from '@4geeksacademy/react-flux-dash';
-class SessionStore extends Flux.Store{
+class SessionStore extends Flux.DashStore{
     constructor(){
         super();
-        //state initialization on constructor
-        this.state = {
-            authenticated: false 
-        }
-    }
-    
-    //you are forced to use _ to avoid using the setters anywhere else
-    _setAuthentication(data){
-        //set the the new store state and emit
-        this.setStoreState({ authenticated: data.authenticated }).emit();
-        //you can specify an event name if you want
-        this.setStoreState({ authenticated: data.authenticated }).emit('EVENT_NAME');
-    }
-    
-    getAuthentication(){
-        return this.state.authenticated;
+        // Declare an Event
+        this.addEvent("onLogout");
+        // Or Declare an event with some imutable transformation logic
+        this.addEvent("login", (state) => {
+            // Do something with the data before propagating the Event
+            return Object.assign(state, {"key": "value"})
+        });
+        // Or Declare an event with some plain transformation logic
+        this.addEvent("login", (state) => {
+            state.some_other_property = "Some other Data";
+            return Object.assign(state, {"key": "value"})
+        });
     }
 }
 export default new SessionStore();
 ```
-### 4) Handling store changes
 
-There are 2 main ways to listen to store changes:
-
-1) New lifecycle component function **handleStoreChanges** for store changes
+### 2) Registering with the Store changes
 
 ```js
-    import Flux from '@4geeksacademy/react-flux-dash';
-    import SessionStore from '/path/to/store';
-    
-    class MyComponent extends Flux.View{
-        constructor(){
-            super();
-            // bind your store on the view
-            this.bindStore(SessionStore);
-        }
-        
-        // if you don’t define this function you get an error
-        // this function gets automatically called when SessionStore state changes
-        handleStoreChanges(){
-            // retrieve any store data
-            var isAuthenticated = SessionStore.getAuthentication();
-        }
-    }
+import React from 'react';
+import SessionStore from '/path/to/store';
+
+class View extends React.Component {
+      constructor(){
+          super();
+      }
+
+      componentDidMount() {
+          const me = this;
+          this.loginSubscription = SessionStore.subscribe("login", (state) => {
+              // Do something usefull with the Event Data
+              me.userName = state.user.name;
+          });
+          // Register some method
+          this.logoutSubscription = SessionStore.subscribe("logout", this.logOutEvent().bind(this));
+      }
+
+      logOutEvent(state){
+        //DO something with the state or the state of the Store
+        const storeState = SessionStore.getState()
+      }
+
+      componentWillUnMount() {
+          // Don't forget to release the subscription
+          this.loginSubscription.unsubscribe();
+          this.logoutSubscription.unsubscribe();
+      }
+  }
 
 ```
 
-2) Or set event name and handler
+### 3) Define some action that will trigger the event
 
 ```js
-    import MyStore from '/path/to/store';
-    
-    class MyComponent extends Flux.View{
-        constructor(){
-            // start listening to changes on SessionStore for specific event
-            this.bindStore(SessionStore,'EVENT_NAME', function(){
-                // retrieve any store data
-                var isAuthenticated = SessionStore.getAuthentication();
-            });
-            
-            // start listening to changes on SessionStore
-            this.bindStore(SessionStore, function(){
-                // retrieve any store data
-                var isAuthenticated = SessionStore.getAuthentication();
-            });
-        }
-    }
+import Flux from '@4geeksacademy/react-flux-dash';
+
+const authenticateAction = (username, password)=> {
+      // Don't forget to Validate the data ex: username !=== undefined
+      let dataToSave = {
+          authenticated: true
+      }
+      Flux.dispatchEvent('login', dataToSave)
+}
+
+export default {authenticateAction};
+```
+
+### 4) Glue all together using the Action from the View
+
+
+```js
+import React from 'react';
+import SessionStore from '/path/to/store';
+import {authenticateAction} from 'path/to/action';
+
+class View extends React.Component {
+      constructor(){
+          super();
+      }
+
+      componentDidMount() {
+          const me = this;
+          this.loginSubscription = SessionStore.subscribe("login", (state) => {
+              // Do something usefull with the Event Data
+              me.userName = state.user.name;
+          });
+          // Register some method
+          this.logoutSubscription = SessionStore.subscribe("logout", this.logOutEvent().bind(this));
+      }
+
+      logOutEvent(state){
+        //DO something with the state or the state of the Store
+        const storeState = SessionStore.getState()
+      }
+
+      componentWillUnMount() {
+          // Don't forget to release the subscription
+          this.loginSubscription.unsubscribe();
+          this.logoutSubscription.unsubscribe();
+      }
+
+      login(){
+        authenticateAction(this.state.username, this.state.password);
+      }
+
+  }
+
 ```
 
 ## Contributors

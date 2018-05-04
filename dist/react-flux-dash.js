@@ -2199,15 +2199,16 @@ var Store = function () {
             //Check for duplicated names on the Store
             this.events.forEach(function (event) {
                 if (event.name === validateEventName) {
-                    throw new Error('An event named: ' + validateEventName + ' already exists on the Store');
+                    throw new Error('STORE: An event named: ' + validateEventName + ' already exists on the Store');
                 }
             });
+            var e = void 0;
 
             for (var _len = arguments.length, transformers = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
                 transformers[_key - 1] = arguments[_key];
             }
 
-            var e = new _Event2.default(eventName, transformers);
+            if (transformers.length > 0) e = new _Event2.default(eventName, transformers);else e = new _Event2.default(eventName);
             this.events.push(e);
             _index.allEvents.push(e);
         }
@@ -2252,7 +2253,7 @@ var Store = function () {
                 var eventName = event.name;
                 state = Object.assign(state, _defineProperty({}, eventName, eventState));
             });
-            return state;
+            return Object.freeze(state);
         }
     }]);
 

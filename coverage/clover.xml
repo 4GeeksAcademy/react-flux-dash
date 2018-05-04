@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1524926119816" clover="3.2.0">
-  <project timestamp="1524926119817" name="All files">
-    <metrics statements="77" coveredstatements="77" conditionals="34" coveredconditionals="34" methods="15" coveredmethods="15" elements="126" coveredelements="126" complexity="0" loc="77" ncloc="77" packages="1" files="4" classes="4">
+<coverage generated="1525392682377" clover="3.2.0">
+  <project timestamp="1525392682377" name="All files">
+    <metrics statements="83" coveredstatements="82" conditionals="40" coveredconditionals="39" methods="16" coveredmethods="16" elements="139" coveredelements="137" complexity="0" loc="83" ncloc="83" packages="1" files="4" classes="4">
       <file name="Event.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Event.js">
         <metrics statements="31" coveredstatements="31" conditionals="16" coveredconditionals="16" methods="5" coveredmethods="5"/>
         <line num="14" count="22" type="stmt"/>
@@ -37,7 +37,7 @@
         <line num="72" count="4" type="stmt"/>
       </file>
       <file name="Store.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Store.js">
-        <metrics statements="25" coveredstatements="25" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <metrics statements="31" coveredstatements="30" conditionals="14" coveredconditionals="13" methods="7" coveredmethods="7"/>
         <line num="7" count="1" type="stmt"/>
         <line num="17" count="3" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
@@ -57,12 +57,18 @@
         <line num="51" count="1" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="55" count="1" type="stmt"/>
-        <line num="63" count="1" type="stmt"/>
+        <line num="63" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="64" count="1" type="stmt"/>
-        <line num="65" count="2" type="stmt"/>
-        <line num="66" count="2" type="stmt"/>
-        <line num="67" count="2" type="stmt"/>
-        <line num="69" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
       </file>
       <file name="Util.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Util.js">
         <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>

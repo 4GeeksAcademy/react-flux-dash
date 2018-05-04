@@ -59,14 +59,28 @@ class Store {
      * Get the state of the Store
      * This is the last know value of each event
      */
-    getState() {
+    getState(eventName) {
+        if (!(eventName === undefined || eventName === null))
+            return this.__getEventState(eventName);
+
         let state = {};
         this.events.forEach(event => {
             const eventState = event.value;
             const eventName = event.name;
             state = Object.assign(state, {[eventName]: eventState})
         });
-        return Object.freeze(state);
+        return state;
+    }
+
+    /**
+     * Get the state of a particular event
+     * This is the last know value of the event
+     */
+    __getEventState(eventName) {
+        for (let i = 0; i < this.events.length; i++)
+            if (this.events[i].name === eventName)
+                return this.events[i].value;
+        throw new Error(`Non existent eventName: ${eventName} on Store`);
     }
 }
 

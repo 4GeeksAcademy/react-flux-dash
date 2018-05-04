@@ -13,9 +13,9 @@ class Event {
     constructor(name, transformers) {
         this.name = validateText(name);
         this.transformers = new Array();
-        this.value = undefined;
+        this.value = null;
         this.subject = new Subject();
-        
+
         if (typeof(transformers) === "undefined")
             return;
 
@@ -32,10 +32,10 @@ class Event {
             const testResult = transformer({});
 
             if (typeof(testResult) === "undefined")
-                throw new Error("All the transformers must return a mutated state object and not 'undefined'");
+                throw new Error(`All the transformers must return a mutated state object and not 'undefined': ${transformer}`);
 
             if (testResult === null)
-                throw new Error("All the transformers must return a mutated state object and not 'null'");
+                throw new Error(`All the transformers must return a mutated state object and not 'null': ${transformer}`);
         });
 
         this.transformers = transformers;
