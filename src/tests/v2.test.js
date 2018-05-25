@@ -1,6 +1,9 @@
 import Store from "../v2/Store";
 import Event from "../v2/Event";
 import {dispatchEvent} from '../v2/index';
+import View from "../react";
+
+window.DEBUG = false;
 
 const EVENT_NAME = "SOMETHING_HAPPEND";
 const OTHER_EVENT_NAME = "SOMETHING_ELSE_HAPPEND";
@@ -277,4 +280,51 @@ test('InValid subscriber on the Store: Unknown event', () => {
 });
 
 
+// CLEAR STORE
+testAction();
+testStore.clearState();
+const anotherEeventValue = testStore.getState(EVENT_NAME);
+
+test('testState should be null after clearing the Store', () => {
+    console.log(anotherEeventValue);
+    expect(anotherEeventValue).toBe(null);
+});
+
+
+testAction();
+test('Should call the subscriber inmediatly', () => {
+    testStore.subscribe(EVENT_NAME, (data) => {
+        console.log("EUREKA");
+        expect(data).toEqual(expect.objectContaining({
+            "foo": expect.any(String)
+        }));
+    }, true);
+});
+
+
 testView.componentWillUnMount();
+
+
+
+class TestReactView extends View {
+
+    constructor(props){
+        super(props);
+        this.subscribe(testStore, EVENT_NAME, (data) => {
+            console.log("EUREKA 2");
+        })
+    }
+}
+
+const reactView = new TestReactView();
+console.log("REACT",reactView.subscriptions);
+console.log("REACT",reactView.toBeSubscribed);
+console.log("REACT",reactView.hasBeenUnmounted);
+reactView.componentDidMount();
+console.log("REACT",reactView.subscriptions);
+console.log("REACT",reactView.toBeSubscribed);
+console.log("REACT",reactView.hasBeenUnmounted);
+reactView.componentWillUnmount();
+console.log("REACT",reactView.subscriptions);
+console.log("REACT",reactView.toBeSubscribed);
+console.log("REACT",reactView.hasBeenUnmounted);

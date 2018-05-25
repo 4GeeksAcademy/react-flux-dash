@@ -1,9 +1,10 @@
 import {Dispatcher} from 'flux';
-import {validateText} from "./Util";
+import utils from "./Util";
 
 const __dispatch = new Dispatcher();
 
 const handleDispatch = ({eventName, eventData}) => {
+    utils.log("v2/index:handleDispatch");
     let atLeastDistpatchOneEvent = false;
     allEvents.forEach(event => {
         if (event.name === eventName) {
@@ -24,7 +25,8 @@ __dispatch.register(handleDispatch);
  * @param eventData The data to be passed
  */
 const dispatchEvent = (eventName, eventData) => {
-    const validateEventName = validateText(eventName);
+    utils.log("v2/index:dispatchEvent");
+    const validateEventName = utils.validateText(eventName);
     __dispatch.dispatch({eventName, eventData});
 }
 

@@ -1,101 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1525392682377" clover="3.2.0">
-  <project timestamp="1525392682377" name="All files">
-    <metrics statements="83" coveredstatements="82" conditionals="40" coveredconditionals="39" methods="16" coveredmethods="16" elements="139" coveredelements="137" complexity="0" loc="83" ncloc="83" packages="1" files="4" classes="4">
+<coverage generated="1527222726636" clover="3.2.0">
+  <project timestamp="1527222726636" name="All files">
+    <metrics statements="101" coveredstatements="98" conditionals="47" coveredconditionals="44" methods="19" coveredmethods="19" elements="167" coveredelements="161" complexity="0" loc="101" ncloc="101" packages="1" files="4" classes="4">
       <file name="Event.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Event.js">
-        <metrics statements="31" coveredstatements="31" conditionals="16" coveredconditionals="16" methods="5" coveredmethods="5"/>
+        <metrics statements="33" coveredstatements="33" conditionals="16" coveredconditionals="16" methods="5" coveredmethods="5"/>
         <line num="14" count="22" type="stmt"/>
-        <line num="15" count="19" type="stmt"/>
+        <line num="15" count="22" type="stmt"/>
         <line num="16" count="19" type="stmt"/>
         <line num="17" count="19" type="stmt"/>
-        <line num="19" count="19" type="cond" truecount="2" falsecount="0"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="22" count="17" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="25" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="28" count="12" type="stmt"/>
-        <line num="29" count="12" type="cond" truecount="2" falsecount="0"/>
-        <line num="30" count="3" type="stmt"/>
-        <line num="32" count="9" type="stmt"/>
-        <line num="34" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="37" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="41" count="6" type="stmt"/>
-        <line num="51" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="52" count="3" type="stmt"/>
-        <line num="53" count="3" type="stmt"/>
+        <line num="18" count="19" type="stmt"/>
+        <line num="20" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="23" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="26" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="12" type="stmt"/>
+        <line num="30" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="9" type="stmt"/>
+        <line num="35" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="38" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="42" count="6" type="stmt"/>
+        <line num="52" count="8" type="stmt"/>
+        <line num="53" count="8" type="cond" truecount="2" falsecount="0"/>
         <line num="54" count="3" type="stmt"/>
-        <line num="62" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="63" count="1" type="stmt"/>
-        <line num="66" count="4" type="stmt"/>
-        <line num="67" count="4" type="stmt"/>
-        <line num="68" count="3" type="stmt"/>
-        <line num="70" count="4" type="stmt"/>
-        <line num="71" count="4" type="stmt"/>
-        <line num="72" count="4" type="stmt"/>
+        <line num="55" count="5" type="stmt"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="64" count="6" type="stmt"/>
+        <line num="65" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="69" count="6" type="stmt"/>
+        <line num="70" count="6" type="stmt"/>
+        <line num="71" count="5" type="stmt"/>
+        <line num="73" count="6" type="stmt"/>
+        <line num="74" count="6" type="stmt"/>
       </file>
       <file name="Store.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Store.js">
-        <metrics statements="31" coveredstatements="30" conditionals="14" coveredconditionals="13" methods="7" coveredmethods="7"/>
+        <metrics statements="40" coveredstatements="40" conditionals="17" coveredconditionals="17" methods="9" coveredmethods="9"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
-        <line num="21" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="29" count="1" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="43" count="5" type="stmt"/>
-        <line num="45" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="46" count="3" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="3" type="stmt"/>
-        <line num="50" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="63" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="64" count="1" type="stmt"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
-        <line num="68" count="2" type="stmt"/>
-        <line num="69" count="2" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
-        <line num="72" count="1" type="stmt"/>
-        <line num="80" count="1" type="stmt"/>
-        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="82" count="1" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="46" count="7" type="stmt"/>
+        <line num="47" count="7" type="stmt"/>
+        <line num="49" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="3" type="stmt"/>
+        <line num="52" count="4" type="stmt"/>
+        <line num="53" count="5" type="stmt"/>
+        <line num="54" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="71" count="3" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="77" count="2" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="87" count="3" type="stmt"/>
+        <line num="88" count="3" type="stmt"/>
+        <line num="89" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
       </file>
       <file name="Util.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/Util.js">
-        <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
-        <line num="9" count="35" type="cond" truecount="2" falsecount="0"/>
+        <metrics statements="12" coveredstatements="9" conditionals="10" coveredconditionals="7" methods="2" coveredmethods="2"/>
+        <line num="9" count="39" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="2" type="stmt"/>
-        <line num="11" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="37" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="2" type="stmt"/>
-        <line num="13" count="31" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="35" type="cond" truecount="2" falsecount="0"/>
         <line num="14" count="2" type="stmt"/>
-        <line num="16" count="29" type="stmt"/>
+        <line num="16" count="33" type="stmt"/>
+        <line num="22" count="69" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="69" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
       </file>
       <file name="index.js" path="/Users/alacret/workspace/react-flux-dash/src/v2/index.js">
-        <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <metrics statements="16" coveredstatements="16" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="16" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="7" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
       </file>
     </metrics>
   </project>

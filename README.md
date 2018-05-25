@@ -150,6 +150,14 @@ class View extends React.Component {
   }
 
 ```
+ChangeLog:
+
+#### v 3.0.0
+
+- Add a ```clearState``` method for the Store to set all Values to null
+- Add a parameter to the subscription, to request the last value of the Event if wanted
+- Add a Helper React View, to subscribe and unsubscribe to the Store wanted
+
 
 ## Contributors
 

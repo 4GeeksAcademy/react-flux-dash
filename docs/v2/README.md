@@ -144,6 +144,11 @@ class View extends React.Component {
 
 ```
 
+ChangeLog:
+
+#### v
+
+
 ## Contributors
 
 - Alejandro Sanchez [github.com/alesanchezr](https://github.com/alesanchezr) [alesanchezr.com](http://alesanchezr.com)

@@ -16,4 +16,14 @@ function validateText(text) {
     return text;
 }
 
-export {validateText};
+export default {
+    validateText,
+    log: (msg, obj) => {
+        if (!window.DEBUG)
+            return;
+        if (obj)
+            console.log(msg, obj);
+        else
+            console.log(msg)
+    }
+};

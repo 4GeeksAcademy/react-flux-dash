@@ -2061,7 +2061,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _Util = __webpack_require__(/*! ./Util */ "./src/v2/Util.js");
 
+var _Util2 = _interopRequireDefault(_Util);
+
 var _Subject = __webpack_require__(/*! rxjs/Subject */ "./node_modules/rxjs/Subject.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2077,7 +2081,8 @@ var Event = function () {
     function Event(name, transformers) {
         _classCallCheck(this, Event);
 
-        this.name = (0, _Util.validateText)(name);
+        _Util2.default.log("v2/Event:constructor");
+        this.name = _Util2.default.validateText(name);
         this.transformers = new Array();
         this.value = null;
         this.subject = new _Subject.Subject();
@@ -2112,6 +2117,7 @@ var Event = function () {
     _createClass(Event, [{
         key: "subscribe",
         value: function subscribe(subscriber) {
+            _Util2.default.log("v2/Event:subscribe");
             if (typeof subscriber !== "function") throw new Error("subscriber must be a function");
             var subscription = this.subject.subscribe(subscriber);
             return subscription;
@@ -2125,6 +2131,7 @@ var Event = function () {
     }, {
         key: "notify",
         value: function notify(eventData) {
+            _Util2.default.log("v2/Event:notify");
             if (this.subject.observers.length == 0) {
                 console.warn("No subscriber for " + this.name + ", no side effects generated");
             }
@@ -2134,7 +2141,6 @@ var Event = function () {
                 data = transformer(data);
             });
             this.value = data;
-            var atLeastOneSubscriber = false;
             this.subject.next(this.value);
         }
     }]);
@@ -2170,6 +2176,8 @@ var _index = __webpack_require__(/*! ./index */ "./src/v2/index.js");
 
 var _Util = __webpack_require__(/*! ./Util */ "./src/v2/Util.js");
 
+var _Util2 = _interopRequireDefault(_Util);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2180,7 +2188,8 @@ var Store = function () {
     function Store() {
         _classCallCheck(this, Store);
 
-        this.events = new Array();
+        _Util2.default.log("v2/Store:constructor");
+        this.events = [];
     }
 
     /**
@@ -2194,7 +2203,8 @@ var Store = function () {
     _createClass(Store, [{
         key: 'addEvent',
         value: function addEvent(eventName) {
-            var validateEventName = (0, _Util.validateText)(eventName);
+            _Util2.default.log("v2/Store:addEvent");
+            var validateEventName = _Util2.default.validateText(eventName);
 
             //Check for duplicated names on the Store
             this.events.forEach(function (event) {
@@ -2217,6 +2227,7 @@ var Store = function () {
          * Subscribe to an Event to receive their updates
          * @param eventName The Event Name to which you want to subscribe
          * @param subscriber The subscriber function that's gonna be executed when it happends
+         * @param receiveLastValue Whether the subscriber
          * @return subscription The subscription for this event in the Store
          * @throws an Error if the event does not exists
          * @throws an Error if the subscriber is not a function
@@ -2225,7 +2236,10 @@ var Store = function () {
     }, {
         key: 'subscribe',
         value: function subscribe(eventName, subscriber) {
-            var validatedEventName = (0, _Util.validateText)(eventName);
+            var receiveLastValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+            _Util2.default.log("v2/Store:subscribe");
+            var validatedEventName = _Util2.default.validateText(eventName);
 
             if (typeof subscriber !== 'function') throw new Error('subscriber must be a function');
 
@@ -2233,6 +2247,7 @@ var Store = function () {
                 var event = this.events[i];
                 if (event.name === validatedEventName) {
                     var subscription = event.subscribe(subscriber);
+                    if (receiveLastValue) subscriber(event.value);
                     return subscription;
                 }
             }
@@ -2247,6 +2262,7 @@ var Store = function () {
     }, {
         key: 'getState',
         value: function getState(eventName) {
+            _Util2.default.log("v2/Store:getState");
             if (!(eventName === undefined || eventName === null)) return this.__getEventState(eventName);
 
             var state = {};
@@ -2266,9 +2282,23 @@ var Store = function () {
     }, {
         key: '__getEventState',
         value: function __getEventState(eventName) {
+            _Util2.default.log("v2/Store:__getEventState");
             for (var i = 0; i < this.events.length; i++) {
                 if (this.events[i].name === eventName) return this.events[i].value;
             }throw new Error('Non existent eventName: ' + eventName + ' on Store');
+        }
+
+        /**
+         * Clears all the values of the events in the Store
+         */
+
+    }, {
+        key: 'clearState',
+        value: function clearState() {
+            _Util2.default.log("v2/Store:clearState");
+            this.events.forEach(function (event) {
+                return event.value = null;
+            });
         }
     }]);
 
@@ -2307,7 +2337,13 @@ function validateText(text) {
     return text;
 }
 
-exports.validateText = validateText;
+exports.default = {
+    validateText: validateText,
+    log: function log(msg, obj) {
+        if (!window.DEBUG) return;
+        if (obj) console.log(msg, obj);else console.log(msg);
+    }
+};
 
 /***/ }),
 
@@ -2330,12 +2366,17 @@ var _flux = __webpack_require__(/*! flux */ "flux");
 
 var _Util = __webpack_require__(/*! ./Util */ "./src/v2/Util.js");
 
+var _Util2 = _interopRequireDefault(_Util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var __dispatch = new _flux.Dispatcher();
 
 var handleDispatch = function handleDispatch(_ref) {
     var eventName = _ref.eventName,
         eventData = _ref.eventData;
 
+    _Util2.default.log("v2/index:handleDispatch");
     var atLeastDistpatchOneEvent = false;
     allEvents.forEach(function (event) {
         if (event.name === eventName) {
@@ -2355,7 +2396,8 @@ __dispatch.register(handleDispatch);
  * @param eventData The data to be passed
  */
 var dispatchEvent = function dispatchEvent(eventName, eventData) {
-    var validateEventName = (0, _Util.validateText)(eventName);
+    _Util2.default.log("v2/index:dispatchEvent");
+    var validateEventName = _Util2.default.validateText(eventName);
     __dispatch.dispatch({ eventName: eventName, eventData: eventData });
 };
 

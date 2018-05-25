@@ -1,4 +1,4 @@
-import {validateText} from "./Util";
+import utils from "./Util";
 import {Subject} from 'rxjs/Subject';
 
 class Event {
@@ -11,7 +11,8 @@ class Event {
      * @throws an Error if the transformers return an Undefined or Null value
      */
     constructor(name, transformers) {
-        this.name = validateText(name);
+        utils.log("v2/Event:constructor");
+        this.name = utils.validateText(name);
         this.transformers = new Array();
         this.value = null;
         this.subject = new Subject();
@@ -48,6 +49,7 @@ class Event {
      * @throws an Error if the subscriber is not a function
      */
     subscribe(subscriber) {
+        utils.log("v2/Event:subscribe");
         if (typeof(subscriber) !== "function")
             throw new Error("subscriber must be a function");
         const subscription = this.subject.subscribe(subscriber)
@@ -59,6 +61,7 @@ class Event {
      * @param eventData the data of the event
      */
     notify(eventData) {
+        utils.log("v2/Event:notify");
         if (this.subject.observers.length == 0) {
             console.warn(`No subscriber for ${this.name}, no side effects generated`);
         }
@@ -68,9 +71,7 @@ class Event {
             data = transformer(data);
         });
         this.value = data;
-        let atLeastOneSubscriber = false;
         this.subject.next(this.value);
-
     }
 
 }
