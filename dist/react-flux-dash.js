@@ -631,7 +631,7 @@ var Observable = (function () {
             }, reject, resolve);
         });
     };
-    /** @deprecated internal use only */ Observable.prototype._subscribe = function (subscriber) {
+    Observable.prototype._subscribe = function (subscriber) {
         return this.source.subscribe(subscriber);
     };
     /**
@@ -836,7 +836,7 @@ var Subject = (function (_super) {
             return _super.prototype._trySubscribe.call(this, subscriber);
         }
     };
-    /** @deprecated internal use only */ Subject.prototype._subscribe = function (subscriber) {
+    Subject.prototype._subscribe = function (subscriber) {
         if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
@@ -892,7 +892,7 @@ var AnonymousSubject = (function (_super) {
             this.destination.complete();
         }
     };
-    /** @deprecated internal use only */ AnonymousSubject.prototype._subscribe = function (subscriber) {
+    AnonymousSubject.prototype._subscribe = function (subscriber) {
         var source = this.source;
         if (source) {
             return this.source.subscribe(subscriber);
@@ -1013,13 +1013,10 @@ var Subscriber = (function (_super) {
                     break;
                 }
                 if (typeof destinationOrNext === 'object') {
-                    // HACK(benlesh): To resolve an issue where Node users may have multiple
-                    // copies of rxjs in their node_modules directory.
-                    if (isTrustedSubscriber(destinationOrNext)) {
-                        var trustedSubscriber = destinationOrNext[rxSubscriber_1.rxSubscriber]();
-                        this.syncErrorThrowable = trustedSubscriber.syncErrorThrowable;
-                        this.destination = trustedSubscriber;
-                        trustedSubscriber.add(this);
+                    if (destinationOrNext instanceof Subscriber) {
+                        this.syncErrorThrowable = destinationOrNext.syncErrorThrowable;
+                        this.destination = destinationOrNext;
+                        this.destination.add(this);
                     }
                     else {
                         this.syncErrorThrowable = true;
@@ -1105,7 +1102,7 @@ var Subscriber = (function (_super) {
         this.destination.complete();
         this.unsubscribe();
     };
-    /** @deprecated internal use only */ Subscriber.prototype._unsubscribeAndRecycle = function () {
+    Subscriber.prototype._unsubscribeAndRecycle = function () {
         var _a = this, _parent = _a._parent, _parents = _a._parents;
         this._parent = null;
         this._parents = null;
@@ -1226,7 +1223,7 @@ var SafeSubscriber = (function (_super) {
         }
         return false;
     };
-    /** @deprecated internal use only */ SafeSubscriber.prototype._unsubscribe = function () {
+    SafeSubscriber.prototype._unsubscribe = function () {
         var _parentSubscriber = this._parentSubscriber;
         this._context = null;
         this._parentSubscriber = null;
@@ -1234,9 +1231,6 @@ var SafeSubscriber = (function (_super) {
     };
     return SafeSubscriber;
 }(Subscriber));
-function isTrustedSubscriber(obj) {
-    return obj instanceof Subscriber || ('syncErrorThrowable' in obj && obj[rxSubscriber_1.rxSubscriber]);
-}
 //# sourceMappingURL=Subscriber.js.map
 
 /***/ }),
@@ -1849,7 +1843,11 @@ var _Event = __webpack_require__(/*! ./v2/Event */ "./src/v2/Event.js");
 
 var _Event2 = _interopRequireDefault(_Event);
 
-var _index = __webpack_require__(/*! ./v2/index */ "./src/v2/index.js");
+var _index = __webpack_require__(/*! ./react/index */ "./src/react/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__(/*! ./v2/index */ "./src/v2/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2039,7 +2037,110 @@ var Action = function () {
     return Action;
 }();
 
-exports.default = { Store: Store, Action: Action, View: View, Component: View, DashStore: _Store2.default, DashEvent: _Event2.default, dispatchEvent: _index.dispatchEvent };
+exports.default = { Store: Store, Action: Action, View: View, Component: View, DashView: _index2.default, DashStore: _Store2.default, DashEvent: _Event2.default, dispatchEvent: _index3.dispatchEvent };
+
+/***/ }),
+
+/***/ "./src/react/index.js":
+/*!****************************!*\
+  !*** ./src/react/index.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Util = __webpack_require__(/*! ../v2/Util */ "./src/v2/Util.js");
+
+var _Util2 = _interopRequireDefault(_Util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var View = function (_React$Component) {
+    _inherits(View, _React$Component);
+
+    function View(props) {
+        _classCallCheck(this, View);
+
+        var _this = _possibleConstructorReturn(this, (View.__proto__ || Object.getPrototypeOf(View)).call(this, props));
+
+        if (new.target === View) {
+            throw new TypeError("Cannot construct View instances directly");
+        }
+        _this.subscriptions = [];
+        _this.toBeSubscribed = [];
+        _this.hasBeenUnmounted = false;
+        return _this;
+    }
+
+    /**
+     * Subscribe to an Event in a Store
+     * This is a helpfull method to keep track of your subscriptions on UnMount and Mount of the Component
+     * @param store The Store object where we want to subscribe to, must be a subclass of v2/Store
+     * @param eventName The Event Name to which you want to subscribe
+     * @param subscriber The subscriber function that's gonna be executed when it happends
+     * @param receiveLastValue Whether the subscriber
+     * @return subscription The subscription for this event in the Store
+     * @throws an Error if the event does not exists in the Store
+     * @throws an Error if the subscriber is not a function
+     */
+
+
+    _createClass(View, [{
+        key: "subscribe",
+        value: function subscribe(store, eventName, subscriber) {
+            var receiveLastValue = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+            _Util2.default.log("DASHVIEW:subscribe");
+            var subscription = store.subscribe(eventName, subscriber, receiveLastValue);
+            this.toBeSubscribed.push({ store: store, eventName: eventName, subscriber: subscriber, receiveLastValue: receiveLastValue });
+            this.subscriptions.push(subscription);
+            return subscription;
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            _Util2.default.log("DASHVIEW:componentDidMount");
+            if (!this.hasBeenUnmounted) return;
+            var that = this;
+            this.toBeSubscribed.forEach(function (info) {
+                var subscription = info.store.subscribe(info.eventName, info.subscriber, info.receiveLastValue);
+                that.subscriptions.push(subscription);
+            });
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            _Util2.default.log("DASHVIEW:componentWillUnmount");
+            this.subscriptions.forEach(function (subscription) {
+                subscription.unsubscribe();
+            });
+            this.subscriptions = [];
+            this.hasBeenUnmounted = true;
+        }
+    }]);
+
+    return View;
+}(_react2.default.Component);
+
+exports.default = View;
 
 /***/ }),
 
