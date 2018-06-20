@@ -4,6 +4,7 @@ import {Dispatcher} from 'flux';
 
 import DashStore from "./v2/Store";
 import DashEvent from "./v2/Event";
+import DashView from "./react/index";
 import {dispatchEvent} from './v2/index'
 
 const FluxDispatcher = new Dispatcher();
@@ -157,4 +158,4 @@ class Action {
 
 }
 
-export default {Store: Store, Action: Action, View: View, Component: View, DashStore, DashEvent, dispatchEvent};
+export default {Store: Store, Action: Action, View: View, Component: View, DashView, DashStore, DashEvent, dispatchEvent};
