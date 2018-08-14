@@ -150,7 +150,33 @@ class View extends React.Component {
   }
 
 ```
+
+### Subscribe without worring about unsubscribing
+Alternatively you can inherit from Flux.DashView class to avoid having to unsubscribe.
+```js
+import React from 'react';
+import SessionStore from '/path/to/store';
+import {authenticateAction} from 'path/to/action';
+
+class View extends Flux.DashView {
+      
+      //...
+      
+      componentDidMount() {
+          this.subscribe(SessionStore, "login", (updatedData) => {
+              // Do something usefull with the Event Data
+              console.log(updatedData);
+          });
+      }
+
+  }
+
+```
+
 ChangeLog:
+
+#### v 3.0.2
+- Extend your components from Flux.DashView to subscribe to the store without worring about usubscribing.
 
 #### v 3.0.0
 
